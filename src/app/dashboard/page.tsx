@@ -1,23 +1,28 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthProvider';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthProvider';
+import DashboardLayout from '@/components/layouts/DashboardLayout';
+import PortfolioWidget from '@/components/dashboard/PortfolioWidget';
+import InvestmentSummary from '@/components/dashboard/InvestmentSummary';
+import MarketOverview from '@/components/dashboard/MarketOverview';
+import PerformanceChart from '@/components/dashboard/PerformanceChart';
 
 export default function DashboardPage() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/');
+      router.push('/login');
     }
   }, [user, loading, router]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-dark">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -27,33 +32,41 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-semibold">FinancePro Dashboard</h1>
-            </div>
-            <div className="flex items-center">
-              <button
-                onClick={() => signOut()}
-                className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign Out
-              </button>
-            </div>
+    <DashboardLayout>
+      <div className="p-6 space-y-6">
+        {/* Başlık ve Hoşgeldin Mesajı */}
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-white">
+            Hoş geldiniz, {user.email}
+          </h1>
+          <div className="text-sm text-gray-400">
+            Son güncelleme: {new Date().toLocaleString('tr-TR')}
           </div>
         </div>
-      </nav>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
-            <h2 className="text-2xl font-bold mb-4">Welcome back!</h2>
-            <p className="text-gray-600">Your dashboard content will appear here.</p>
+        {/* Ana Dashboard Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Portföy Özeti */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-2">
+            <PortfolioWidget />
+          </div>
+
+          {/* Yatırım Özeti */}
+          <div className="col-span-1">
+            <InvestmentSummary />
+          </div>
+
+          {/* Performans Grafiği */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-2">
+            <PerformanceChart />
+          </div>
+
+          {/* Piyasa Genel Bakış */}
+          <div className="col-span-1">
+            <MarketOverview />
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 } 

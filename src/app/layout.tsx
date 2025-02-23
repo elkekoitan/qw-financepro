@@ -1,14 +1,16 @@
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Providers } from '@/components/providers';
+import { initMonitoring } from '@/utils/monitoring';
 import './globals.css';
-import { AuthProvider } from '@/contexts/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'FinancePro',
-  description: 'Your personal finance management solution',
-};
+// Monitoring'i başlat
+if (typeof window !== 'undefined') {
+  initMonitoring();
+}
 
 export default function RootLayout({
   children,
@@ -16,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="tr" className="dark">
       <body className={inter.className}>
-        <AuthProvider>
+        <Providers>
           {children}
-        </AuthProvider>
+          <Analytics />
+          <SpeedInsights />
+        </Providers>
       </body>
     </html>
   );

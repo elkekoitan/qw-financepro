@@ -5,36 +5,33 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#4FD1C5',
-          dark: '#319795',
-          light: '#76E4F7'
+          DEFAULT: 'var(--color-primary)',
+          dark: 'var(--color-primary-dark)',
         },
         secondary: {
-          DEFAULT: '#38A169',
-          dark: '#2F855A',
-          light: '#68D391'
+          DEFAULT: 'var(--color-secondary)',
+          dark: 'var(--color-secondary-dark)',
         },
         accent: {
-          DEFAULT: '#00B5D8',
-          dark: '#0987A0',
-          light: '#76E4F7'
+          DEFAULT: 'var(--color-accent)',
+          dark: 'var(--color-accent-dark)',
         },
         dark: {
-          DEFAULT: '#0A1A1A',
-          paper: '#112121',
-          surface: '#1A2C2C'
-        }
+          DEFAULT: 'var(--color-dark)',
+          paper: 'var(--color-dark-paper)',
+          surface: 'var(--color-dark-surface)',
+        },
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #4FD1C5 0%, #319795 100%)',
-        'gradient-secondary': 'linear-gradient(135deg, #76E4F7 0%, #4FD1C5 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #0A1A1A 0%, #1A2C2C 100%)',
-        'gradient-glass': 'linear-gradient(135deg, rgba(26,44,44,0.9) 0%, rgba(17,33,33,0.8) 100%)',
-      }
+        'gradient-primary': 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%)',
+        'gradient-dark': 'linear-gradient(180deg, var(--color-dark) 0%, var(--color-dark-surface) 100%)',
+      },
     },
   },
   plugins: [],

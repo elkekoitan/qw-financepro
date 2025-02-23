@@ -2,83 +2,65 @@
 
 import { AppBar, Box, Container, Toolbar, Typography, Button } from '@mui/material';
 import Link from 'next/link';
-import { useContext } from 'react';
-import { ThemeContext } from '@/contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from './ThemeToggle';
 import { motion } from 'framer-motion';
 
 export default function Navbar() {
-  const { mode } = useContext(ThemeContext);
+  const { mode } = useTheme();
 
   return (
-    <AppBar 
-      position="fixed" 
-      elevation={0}
-      sx={{
-        background: mode === 'light' 
-          ? 'rgba(255, 255, 255, 0.8)'
-          : 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(10px)',
-      }}
+    <AppBar
+      position="static"
+      className={`${mode === 'dark' ? 'bg-dark-surface' : 'bg-white'} border-b border-gray-800`}
     >
-      <Container maxWidth="lg">
-        <Toolbar sx={{ justifyContent: 'space-between', py: 1 }}>
-          <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Toolbar className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center flex-grow"
+        >
+          <Link href="/dashboard" className="flex items-center">
             <Typography
               variant="h6"
-              component={motion.div}
-              whileHover={{ scale: 1.05 }}
-              sx={{
-                fontWeight: 700,
-                background: mode === 'light'
-                  ? 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
-                  : 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
+              className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-primary"
             >
               FinancePro
             </Typography>
           </Link>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <ThemeToggle />
-            <Button
-              component={Link}
-              href="/login"
-              variant="text"
-              sx={{
-                color: mode === 'light' ? 'primary.main' : 'white',
-                '&:hover': {
-                  background: mode === 'light' 
-                    ? 'rgba(37, 99, 235, 0.04)'
-                    : 'rgba(255, 255, 255, 0.08)',
-                },
-              }}
+          <div className="hidden md:flex ml-10 space-x-8">
+            <Link
+              href="/dashboard"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-              Giriş Yap
-            </Button>
-            <Button
-              component={Link}
-              href="/register"
-              variant="contained"
-              sx={{
-                background: mode === 'light'
-                  ? 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)'
-                  : 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                color: 'white',
-                '&:hover': {
-                  background: mode === 'light'
-                    ? 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)'
-                    : 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-                },
-              }}
+              Dashboard
+            </Link>
+            <Link
+              href="/portfolio"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-              Kayıt Ol
-            </Button>
-          </Box>
-        </Toolbar>
-      </Container>
+              Portföy
+            </Link>
+            <Link
+              href="/investments"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Yatırımlar
+            </Link>
+          </div>
+        </motion.div>
+        <div className="flex items-center space-x-4">
+          <ThemeToggle />
+          <Button
+            variant="contained"
+            color="primary"
+            className="bg-primary hover:bg-primary-dark"
+          >
+            Çıkış
+          </Button>
+        </div>
+      </Toolbar>
     </AppBar>
   );
 } 

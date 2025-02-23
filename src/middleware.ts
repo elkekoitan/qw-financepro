@@ -1,28 +1,36 @@
+'use client';
+
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+
+const PUBLIC_PATHS = ['/login', '/register', '/auth/callback'];
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
   const { data: { session } } = await supabase.auth.getSession();
 
-  // Protect dashboard routes
-  if (req.nextUrl.pathname.startsWith('/dashboard')) {
-    if (!session) {
-      return NextResponse.redirect(new URL('/login', req.url));
-    }
+  // Gelen isteğin yolu
+  const path = req.nextUrl.pathname;
+
+  // Public path kontrolü
+  const isPublicPath = PUBLIC_PATHS.some(publicPath => path.startsWith(publicPath));
+
+  // Oturum açmış kullanıcılar auth sayfalarına erişmeye çalışırsa dashboard'a yönlendir
+  if (session && isPublicPath) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
-  // Redirect logged in users from auth pages to dashboard
-  if (session && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register')) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  // Oturum açmamış kullanıcılar public olmayan sayfalara erişmeye çalışırsa login'e yönlendir
+  if (!session && !isPublicPath) {
+    return NextResponse.redirect(new URL('/login', req.url));
   }
 
   return res;
 }
 
-// Auth gerektiren sayfalar için yapılandırma
+// Tüm sayfalar için middleware'i çalıştır
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',

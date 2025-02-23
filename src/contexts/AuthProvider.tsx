@@ -1,68 +1,77 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface AuthContextType {
   user: any | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Simüle edilmiş auth durumu kontrolü
+    const checkAuth = async () => {
+      try {
+        // TODO: Gerçek auth kontrolü yapılacak
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
   const signIn = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      setUser(data.user);
+      // TODO: Gerçek auth işlemi yapılacak
+      const user = { id: '1', email };
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error('Sign in error:', error);
       throw error;
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signInWithGoogle = async () => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      if (error) throw error;
-      setUser(data.user);
+      // Simüle edilmiş Google girişi
+      const user = { id: '2', email: 'google@example.com' };
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.error('Google sign in error:', error);
       throw error;
     }
   };
 
   const signOut = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      // TODO: Gerçek sign out işlemi yapılacak
+      localStorage.removeItem('user');
       setUser(null);
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error('Sign out error:', error);
       throw error;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );
@@ -74,6 +83,4 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
-
-export { supabase }; 
+} 

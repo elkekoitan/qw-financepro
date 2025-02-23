@@ -13,7 +13,7 @@
   --color-gold-main: #BFA46F;
   --color-gold-dark: #8B7355;
   --color-dark-bg: #0A0A0A;
-  --color-dark-surface: #1A1A1A;
+  --color-dark-surface: #1A2C2C;
   --text-primary: rgba(255, 255, 255, 1);
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-muted: rgba(255, 255, 255, 0.5);
@@ -22,6 +22,14 @@
   --radius-lg: 8px;
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
   --transition-default: all 0.3s ease;
+  --color-primary: #4FD1C5;
+  --color-primary-dark: #319795;
+  --color-secondary: #38A169;
+  --color-secondary-dark: #2F855A;
+  --color-accent: #00B5D8;
+  --color-accent-dark: #0987A0;
+  --color-dark: #0A1A1A;
+  --color-dark-paper: #112121;
 }
 
 * {
@@ -57,6 +65,39 @@ body {
     rgb(var(--background-end-rgb))
   );
   min-height: 100vh;
+  @apply bg-dark text-white;
+}
+
+.bg-dark {
+  background-color: var(--color-dark);
+}
+
+.bg-dark-paper {
+  background-color: var(--color-dark-paper);
+}
+
+.bg-dark-surface {
+  background-color: var(--color-dark-surface);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-dark {
+  background-color: var(--color-primary-dark);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.hover\:bg-primary-dark:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
 }
 
 /* Özel Animasyonlar */
@@ -312,4 +353,18 @@ body {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(-8px);
+}
+
+/* Loading Spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 } 

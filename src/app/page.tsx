@@ -1,58 +1,48 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthProvider';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthProvider';
+import { MonitoringTest } from '@/components/monitoring/MonitoringTest';
 
-export default function HomePage() {
-  const { signIn, signUp } = useAuth();
+export default function Home() {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      await signIn(email, password);
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Login failed:', error);
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/login');
     }
-  };
+  }, [user, loading, router]);
 
-  const handleRegister = async (email: string, password: string) => {
-    try {
-      await signUp(email, password);
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-dark">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Welcome to FinancePro
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Please sign in or create an account
-          </p>
-        </div>
-        <div className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
-            <button
-              onClick={() => handleLogin('test@example.com', 'password')}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign in
-            </button>
-            <button
-              onClick={() => handleRegister('test@example.com', 'password')}
-              className="mt-4 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Register
-            </button>
+    <main className="min-h-screen bg-dark text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="space-y-8">
+          <div>
+            <h1 className="text-4xl font-bold">FinancePro</h1>
+            <p className="mt-2 text-gray-400">
+              Finansal geleceğinizi şekillendirin
+            </p>
+          </div>
+
+          <div className="bg-dark-surface rounded-lg shadow-lg p-6">
+            <MonitoringTest />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 } 
