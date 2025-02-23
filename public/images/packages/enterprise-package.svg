@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="600" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:0.95"/>
+    </linearGradient>
+    
+    <linearGradient id="accent-gradient" x1="0" y1="0" x2="600" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#BFA46F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Main Background -->
+  <rect width="600" height="400" fill="url(#bg-gradient)"/>
+
+  <!-- Enterprise Package Elements -->
+  <g transform="translate(300,200)">
+    <!-- Central Hexagon -->
+    <path d="M0,-80 L69.28,-40 L69.28,40 L0,80 L-69.28,40 L-69.28,-40 Z" 
+          fill="none" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="3"/>
+    
+    <!-- Inner Hexagon -->
+    <path d="M0,-40 L34.64,-20 L34.64,20 L0,40 L-34.64,20 L-34.64,-20 Z" 
+          fill="url(#accent-gradient)" 
+          opacity="0.3"/>
+
+    <!-- Center Crown -->
+    <path d="M0,-20 L20,10 L0,0 L-20,10 Z" 
+          fill="url(#accent-gradient)"/>
+
+    <!-- Decorative Lines -->
+    <g>
+      <!-- Vertical Lines -->
+      <line x1="0" y1="-100" x2="0" y2="100" 
+            stroke="url(#accent-gradient)" 
+            stroke-width="1" 
+            opacity="0.3"/>
+      
+      <!-- Diagonal Lines -->
+      <line x1="-86.6" y1="-50" x2="86.6" y2="-50" 
+            stroke="url(#accent-gradient)" 
+            stroke-width="1" 
+            opacity="0.3"/>
+      <line x1="-86.6" y1="50" x2="86.6" y2="50" 
+            stroke="url(#accent-gradient)" 
+            stroke-width="1" 
+            opacity="0.3"/>
+    </g>
+  </g>
+
+  <!-- Abstract Background Elements -->
+  <g opacity="0.2">
+    <!-- Grid Pattern -->
+    <path d="M0,100 H600 M0,200 H600 M0,300 H600" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="0.5"/>
+    <path d="M150,0 V400 M300,0 V400 M450,0 V400" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="0.5"/>
+  </g>
+
+  <!-- Corner Decorations -->
+  <g opacity="0.4">
+    <!-- Top Left -->
+    <path d="M30,30 L80,30 L80,80" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="2" 
+          fill="none"/>
+    
+    <!-- Top Right -->
+    <path d="M520,30 L570,30 L570,80" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="2" 
+          fill="none"/>
+    
+    <!-- Bottom Left -->
+    <path d="M30,320 L80,320 L80,370" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="2" 
+          fill="none"/>
+    
+    <!-- Bottom Right -->
+    <path d="M520,320 L570,320 L570,370" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="2" 
+          fill="none"/>
+  </g>
+
+  <!-- Floating Elements -->
+  <g opacity="0.6">
+    <!-- Small Hexagons -->
+    <path d="M150,100 l10,-5.77 l10,5.77 l0,11.54 l-10,5.77 l-10,-5.77 z" 
+          fill="url(#accent-gradient)"/>
+    <path d="M450,300 l10,-5.77 l10,5.77 l0,11.54 l-10,5.77 l-10,-5.77 z" 
+          fill="url(#accent-gradient)"/>
+    
+    <!-- Small Diamonds -->
+    <path d="M300,50 l5,-5 l5,5 l-5,5 z" 
+          fill="url(#accent-gradient)"/>
+    <path d="M300,350 l5,-5 l5,5 l-5,5 z" 
+          fill="url(#accent-gradient)"/>
+  </g>
+
+  <!-- Radial Lines -->
+  <g opacity="0.2">
+    <path d="M300,200 L450,50 M300,200 L450,350 M300,200 L150,50 M300,200 L150,350" 
+          stroke="url(#accent-gradient)" 
+          stroke-width="0.5"/>
+  </g>
+</svg> 
