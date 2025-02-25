@@ -5,6 +5,7 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["fra1"],
+  "public": true,
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "https://fnuxdfocbpyvshjeiqqv.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZudXhkZm9jYnB5dnNoamVpcXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MTg0MzAsImV4cCI6MjA1NTk5NDQzMH0.gzHodvmzWvyGfCJL-rlZOQNdz2KH_9rceA6cE7La6jE",
