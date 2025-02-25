@@ -8,11 +8,6 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
 jobs:
   setup:
@@ -68,6 +63,9 @@ jobs:
       run: npm run test
       env:
         CI: true
+        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
 
   build:
     needs: lint-and-test
@@ -90,12 +88,15 @@ jobs:
       env:
         CI: true
         NODE_ENV: production
+        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        NEXT_PUBLIC_SENTRY_ENABLED: false
 
   deploy-staging:
     needs: build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: preview
     
     steps:
     - uses: actions/checkout@v4
@@ -115,7 +116,10 @@ jobs:
       run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       env:
         VERCEL_ENV: preview
-        NODE_ENV: staging
+        NODE_ENV: development
+        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
     
     - name: Deploy to Staging
       run: |
@@ -129,7 +133,6 @@ jobs:
     needs: deploy-staging
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: production
     
     steps:
     - uses: actions/checkout@v4
@@ -150,6 +153,9 @@ jobs:
       env:
         VERCEL_ENV: production
         NODE_ENV: production
+        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
     
     - name: Deploy to Production
       run: |
@@ -172,3 +178,4 @@ jobs:
         else
           echo "Deployment failed or skipped"
           exit 1 
+        fi 
