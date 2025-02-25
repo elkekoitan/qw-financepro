@@ -435,4 +435,63 @@ Aşağıda önyüz (front-end) tarafında yapılması planlanan geliştirmeler l
 
 Sonraki adım olarak projeyi ayağa kaldırıp, üretilen çıktıları test etmeye başlayacağız.
 
-_Son Güncelleme: 15 Mart 2024_ 
+# Technical Implementation
++ _Son Güncelleme: 15 Mart 2024_
+
+# Technical Implementation Rehberi
+
+_Son Güncelleme: 15 Mart 2024_
+
+Bu belge, FinancialPro projesinin teknik implementasyon detaylarını kapsamaktadır. Aşağıda, projenin güncel mimari yapısı, bileşen tasarımları, API entegrasyonları, performans optimizasyonları, CI/CD pipeline süreçleri ve hata izleme sistemleri hakkında ayrıntılı bilgiler yer almaktadır.
+
+## Uygulama Mimarisinin Detayları
+
+- **Presentation Layer:**
+  - Next.js App Router yapısı kullanılarak sunucu tarafı rendering (SSR) ve statik site üretimi (SSG) uygulanmıştır.
+  - Artık tüm sayfalar `app` dizininde yer almakta; eski `pages` yapısı kaldırılmıştır.
+  - UI bileşenleri, Tailwind CSS ve Material-UI (MUI) kullanılarak, dark theme ve Türkçe dil desteği ile stilize edilmiştir.
+
+- **Application Layer:**
+  - Use case'ler, servisler ve DTO'lar aracılığıyla iş mantığı merkezi olarak yönetilmektedir.
+  - Kullanıcı, portföy ve yatırım işlemleri, temiz API kontratları ile uygulanmaktadır.
+
+- **Domain Layer:**
+  - Entity'ler, value object'ler (örneğin, Money, Email, Password), domain event'ler ve hata yönetimi Result pattern'i ile sağlanmıştır.
+  - İş mantığı, domain katmanında izole edilerek bağımsız ve test edilebilir hale getirilmiştir.
+
+- **Infrastructure Layer:**
+  - Supabase entegrasyonu ile veritabanı işlemleri, kimlik doğrulama ve real-time data senkronizasyonu sağlanmıştır.
+  - SupabaseUserRepository, SupabasePortfolioRepository ve SupabaseInvestmentRepository gibi repository implementasyonları uygulanmıştır.
+  - SendgridEmailService, e-posta bildirimleri için kullanılmaktadır.
+
+## İntegrasyonlar ve Teknik Detaylar
+
+- **Next.js App Router:**
+  - Eski pages yapısı kaldırılarak, tüm sayfa ve API route dosyaları `app` dizininde yeniden yapılandırılmıştır.
+  - Dinamik route'lar ve nested route yapıları, optimize edilmiş şekilde kullanılmaktadır.
+
+- **CI/CD Pipeline:**
+  - GitHub Actions üzerinden test, lint, build ve deployment adımları otomatikleştirilmiştir.
+  - Vercel CLI ve vercel.json dosyası aracılığıyla production ve staging deployment süreçleri yönetilmektedir.
+
+- **Hata İzleme & Performans:**
+  - Sentry ve New Relic entegrasyonları eklenmiş, uygulama hataları ve performans ölçümleri gerçek zamanlı izlenmektedir.
+
+- **Kod Yazma Standartları:**
+  - ESLint, Prettier ve TypeScript kuralları sıkı bir şekilde uygulanarak kodun okunabilirliği, güvenliği ve tutarlılığı sağlanmaktadır.
+
+## Bileşen ve API Tasarımları
+
+- **UI Bileşenleri:**
+  - DashboardLayout, ThemeToggle, LoginForm, RegistrationForm gibi bileşenler, güncel tasarım standartlarına göre optimize edilmiştir.
+  - Single Responsibility prensibi doğrultusunda, her bileşen belirli bir işlevi yerine getirmektedir.
+
+- **API Entegrasyonları:**
+  - Next.js API route'ları üzerinden CRUD operasyonları ve iş mantığı uygulamaları gerçekleştirilmektedir. Örneğin, `/api/users/route.ts` dosyası kullanıcı işlemleri için entegre edilmiştir.
+
+- **Performans Optimizasyonları:**
+  - Lazy loading, code splitting ve önbellekleme stratejileriyle gereksiz renderlar minimize edilmiştir.
+
+## Sonuç
+
+Bu doküman, FinancialPro projesinin güncel teknik implementasyonunun en son halini yansıtmaktadır. Her yeni özellik eklenirken ve değişiklik yapıldığında bu dokümantasyon güncellenerek, takım içi bilgi paylaşımı ve sürdürülebilir geliştirme süreçleri sağlanacaktır. 

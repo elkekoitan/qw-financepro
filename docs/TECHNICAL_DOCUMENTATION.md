@@ -1,4 +1,5 @@
 # FinancialPro Proje Mimari ve Kütüphane Kullanım Rehberi
+_Son Güncelleme: 15 Mart 2024_
 
 Bu döküman; FinancialPro projesinin mimarisini, kullanılan teknolojileri ve kütüphanelerin işlevlerini detaylı olarak açıklar. Aşağıdaki döküman, Clean Architecture prensiplerine ve modern görsel diyagramlara dayanmaktadır.
 
@@ -530,3 +531,66 @@ _Son Güncelleme: 15 Mart 2024_
 ---
 
 Bu döküman, FinancialPro projesinin mimari yapısını, teknolojik akışını ve kullanılan kütüphanelerin detaylarını güçlü görsellerle destekleyerek sunmaktadır. 
+
+# Technical Documentation Rehberi
+
+_Son Güncelleme: 15 Mart 2024_
+
+Bu belge, FinancialPro projesinin tüm teknik detaylarını kapsamaktadır. Projenin mimari yapısı, kullanılan teknolojiler, bileşen düzeni, API endpoint tasarımları, performans optimizasyonları, CI/CD süreçleri ve hata izleme sistemleri hakkında detaylı bilgiler aşağıda sunulmaktadır.
+
+## Proje Yapısı
+
+FinancialPro projesi aşağıdaki katmanlara ayrılmıştır:
+
+```
+src/
+├── domain/           # İş kuralları, entity'ler, value object'ler ve domain event'ler
+├── application/      # Use case'ler, servisler ve DTO'lar
+├── infrastructure/   # Repository implementasyonları, harici servis adaptörleri, event bus
+└── presentation/     # UI bileşenleri, API controller'ları
+```
+
+## Kullanılan Teknoloji Yığını
+
+- **Next.js (v14.x):** App Router yapısı ile modern sayfa yönlendirmeleri, SSR & SSG
+- **React & Material-UI (MUI):** Modern, duyarlı ve interaktif kullanıcı arayüzleri
+- **Tailwind CSS:** Utility-first stil yönetimi ve dark theme desteği
+- **TypeScript:** Tip güvenliği ve geliştirme deneyiminin iyileştirilmesi
+- **Supabase:** Veritabanı, kimlik doğrulama ve real-time data senkronizasyonu
+- **SendGrid:** E-posta bildirimleri
+- **ESLint, Prettier:** Kod kalitesi ve tutarlılık
+- **Jest & Testing Library:** Birim ve entegrasyon testlerinin yürütülmesi
+- **ioredis:** API istek sınırlandırması ve caching
+- **Pino Logging:** Yüksek performanslı loglama
+- **Sentry & New Relic:** Hata izleme ve performans monitörlemesi
+- **Vercel:** Otomatik deployment, production ve staging ortam yönetimi
+
+## API Entegrasyonları
+
+- Next.js API route'ları üzerinden tüm CRUD işlemleri entegre edilmiştir. Örneğin:
+  - `/api/users/route.ts`: Kullanıcı işlemleri
+  - `/api/portfolios/route.ts`: Portföy işlemleri
+  - `/api/investments/route.ts`: Yatırım işlemleri
+
+Her endpoint, temiz API kontratlarına uygun olarak tasarlanmıştır ve dokümantasyonda ayrıntılı olarak açıklanmıştır.
+
+## Performans ve Optimizasyon
+
+- **Lazy Loading & Code Splitting:** Bileşenler gerektiğinde yüklenir, böylece başlangıç yüklemesi optimize edilir.
+- **Önbellekleme Stratejileri:** Gereksiz renderları ve hesaplamaları minimize etmek için caching mekanizmaları entegre edilmiştir.
+- **Optimize Render:** UI bileşenleri, gereksiz renderlardan kaçınacak şekilde optimize edilmiştir.
+
+## CI/CD Süreçleri
+
+- GitHub Actions ile test, lint, build ve deploy adımları otomatikleştirilmiştir.
+- Vercel CLI ve vercel.json konfigürasyonu sayesinde, production ve staging ortamlara otomatik deployment gerçekleştirilmekte;
+  - Her commit öncesinde otomatik testler koşulmakta, her PR' da kod kalitesi sağlanmaktadır.
+
+## Hata İzleme ve Performans Monitorlemesi
+
+- **Sentry:** Uygulamadaki hatalar, gerçek zamanlı olarak izlenmekte ve raporlanmaktadır.
+- **New Relic:** Performans ölçümleri, uygulama trafiği ve sunucu yanıt süreleri sürekli izlenmektedir.
+
+## Sonuç
+
+Bu doküman, FinancialPro projesinin güncel teknik implementasyonunun tüm ayrıntılarını kapsamaktadır. Her yeni özellik eklenirken doküman güncellenecek ve takım içi bilgi paylaşımı sağlanacaktır. 

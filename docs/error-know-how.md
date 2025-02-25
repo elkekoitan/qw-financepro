@@ -1,6 +1,45 @@
-# Error Know-How
+# Error & Troubleshooting Know-How
 
-Bu döküman, projemizde karşılaşılan teknik zorluklar ve çözüm yollarını detaylandırmaktadır.
+_Son Güncelleme: 15 Mart 2024_
+
+Bu belge, FinancialPro projesinde karşılaşılan yaygın hataların ve sorunların nasıl çözüleceğini anlatan yönergeleri içermektedir. Projede Sentry ve New Relic entegrasyonları sayesinde, hata raporlamaları ve performans sorunları gerçek zamanlı olarak izlenmekte ve analiz edilmektedir.
+
+## Genel Hata Yönetimi
+
+- **Loglama:**
+  - Pino Logging kullanılarak hatalar ayrıntılı loglanır. Log dosyaları, proje yönetimi ve hata çözümü için referans alınır.
+  - Hata mesajları, mümkün olduğunca açıklayıcı ve yerinde olmalıdır.
+
+- **Error Tracking & Monitoring:**
+  - Sentry: Uygulamadaki hatalar otomatik olarak Sentry'ye gönderilir. Hata raporlarını Sentry panosu üzerinden takip edebilirsiniz.
+  - New Relic: Performans metrikleri ve sunucu yanıt süreleri sürekli izlenir. Kritik performans sorunları burada raporlanır.
+
+## Yaygın Hata Senaryoları
+
+1. **Kimlik Doğrulama Hataları:**
+   - Yanlış kullanıcı bilgileri girildiğinde, kullanıcı uygun hata mesajını alır ve oturum açma girişimleri reddedilir.
+   - Sentry raporları, kimlik doğrulama süreçlerindeki olası güvenlik sorunlarını izler.
+
+2. **Veritabanı Hataları:**
+   - Supabase ile ilgili CRUD operasyonlarında, hatalı veri gönderimi veya bağlantı problemleri görülebilir.
+   - Uygulama loglarında ve Sentry'de bu hatalar ayrıntılı raporlanır.
+
+3. **API Entegrasyon Hataları:**
+   - Next.js API route'larında, isteğe bağlı parametreler veya eksik verilerden kaynaklanan hatalar oluşabilir.
+   - API çağrılarında alınan hatalar, Sentry ve ilgili loglar sayesinde tespit edilir.
+
+## Çözüm Adımları
+
+- **Adım 1:** Hata mesajını ayrıntılı olarak inceleyin. Hata mesajında belirtilen hatayı, ilgili log dosyalarında ve Sentry raporlarında detaylandırın.
+- **Adım 2:** Hata kodunu ve ilgili isteği tekrar test edin. Gerekirse, hata durumunu yeniden üretmek için izleme modlarını aktifleştirin.
+- **Adım 3:** Sorunu çözmek için kod değişiklikleri yapmadan önce yerel ortamda testler gerçekleştirerek sorunun kaynağını belirleyin.
+- **Adım 4:** Gerekli düzeltmeleri yapılırken, unit ve entegrasyon testlerinin otomatik olarak çalıştığından emin olun.
+
+## İletişim ve Destek
+
+Herhangi bilinmeyen bir hata durumunda; ekip üyeleriyle toplantı düzenleyin ve ilgili hata raporlarını paylaşın. Tüm hata çözme süreci, dokümantasyon ve Sentry/ New Relic raporları üzerinden takip edilmelidir.
+
+Bu belge, projedeki hata yönetimi süreçlerinin ve çözüm yollarının sürekli güncellenmesi adına referans kaynağı olarak hizmet edecektir.
 
 ## TypeScript Module Hataları ve Çözümleri
 

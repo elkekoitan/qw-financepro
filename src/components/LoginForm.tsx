@@ -1,10 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthProvider';
 
+interface User {
+  email: string;
+  name?: string;
+}
+
 interface LoginFormProps {
-  onLogin: () => void;
+  onLogin: (user: User) => void;
 }
 
 export default function LoginForm({ onLogin }: LoginFormProps) {
@@ -21,7 +26,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
 
     try {
       await signIn(email, password);
-      onLogin();
+      onLogin({ email });
     } catch (err: any) {
       setError(err.message || 'Giriş yapılırken bir hata oluştu');
     } finally {

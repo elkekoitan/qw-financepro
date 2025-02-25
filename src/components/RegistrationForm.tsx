@@ -4,8 +4,13 @@ import { Email } from '@/domain/value-objects/Email';
 import { Password } from '@/domain/value-objects/Password';
 import { Name } from '@/domain/value-objects/Name';
 
+interface User {
+  email: string;
+  name: string;
+}
+
 interface RegistrationFormProps {
-  onRegister: (user: { email: string; name: string }) => void;
+  onRegister: (user: User) => void;
 }
 
 function RegistrationForm({ onRegister }: RegistrationFormProps) {
@@ -46,17 +51,7 @@ function RegistrationForm({ onRegister }: RegistrationFormProps) {
 
     setLoading(true);
     try {
-      const result = await signUp(
-        emailResult.getValue(),
-        passwordResult.getValue(),
-        nameResult.getValue()
-      );
-
-      if (result.isFailure()) {
-        setError(result.getError());
-        return;
-      }
-
+      await signUp(email, password, name);
       onRegister({ email, name });
     } catch (err: any) {
       setError(err.message || 'Kayıt olurken bir hata oluştu');

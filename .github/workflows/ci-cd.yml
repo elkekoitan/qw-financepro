@@ -6,8 +6,43 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  NODE_VERSION: '20.x'
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
 jobs:
-  build-and-test:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        npm ci
+        npm install -g vercel@latest
+      env:
+        CI: true
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+  lint-and-test:
+    needs: setup
     runs-on: ubuntu-latest
     
     steps:
@@ -16,7 +51,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
     
     - name: Install dependencies
@@ -24,30 +59,51 @@ jobs:
     
     - name: Run linting
       run: npm run lint
+      continue-on-error: false
     
     - name: Run type checking
-      run: npm run type-check
+      run: npm run type-check || exit 1
     
     - name: Run tests
       run: npm run test
       env:
-        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        CI: true
+
+  build:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
     
     - name: Build application
       run: npm run build
       env:
-        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        CI: true
+        NODE_ENV: production
 
   deploy-staging:
-    needs: build-and-test
+    needs: build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: staging
+    environment: preview
     
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
     
     - name: Install Vercel CLI
       run: npm install --global vercel@latest
@@ -60,14 +116,12 @@ jobs:
       env:
         VERCEL_ENV: preview
         NODE_ENV: staging
-        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-        NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-        GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
     
     - name: Deploy to Staging
-      run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      run: |
+        echo "Deploying to staging environment..."
+        DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+        echo "Deployed to $DEPLOYMENT_URL"
       env:
         VERCEL_ENV: preview
 
@@ -80,6 +134,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
     - name: Install Vercel CLI
       run: npm install --global vercel@latest
     
@@ -91,13 +150,25 @@ jobs:
       env:
         VERCEL_ENV: production
         NODE_ENV: production
-        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-        NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-        GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
     
     - name: Deploy to Production
-      run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      run: |
+        echo "Deploying to production environment..."
+        DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+        echo "Deployed to $DEPLOYMENT_URL"
       env:
-        VERCEL_ENV: production 
+        VERCEL_ENV: production
+
+  notify:
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check deployment status
+      run: |
+        if [ "${{ needs.deploy-production.result }}" == "success" ]; then
+          echo "Production deployment successful!"
+        else
+          echo "Deployment failed or skipped"
+          exit 1 

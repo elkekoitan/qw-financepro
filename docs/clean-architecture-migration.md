@@ -1,4 +1,58 @@
-# FinancePro Clean Architecture Migration Guide
+# Clean Architecture Migration
++ _Son Güncelleme: 15 Mart 2024_
+
+## Giriş
+
+Bu belge, FinancialPro projesinin mevcut mimari yapısını, eski sayfa tabanlı Next.js yapısından, Clean Architecture prensiplerine uygun olarak Next.js App Router kullanan yapıya geçiş sürecini detaylandırmaktadır. Geçiş süreci; dosya yapısının revizyonu, kod yazma standartlarının güncellenmesi, CI/CD süreçlerinin otomatikleştirilmesi ve hata izleme/performans monitörlemesi entegrasyonu gibi konuları kapsamaktadır.
+
+## Geçiş Süreci
+
+- **Route Yönetiminin Yeniden Yapılandırılması:**
+  - Eski `pages` dizini yerine yeni `app` dizini kullanılarak Next.js App Router yapısına geçiş sağlanmıştır.
+  - Dinamik route'lar, segment ve nested route'lar ile sunucu ve istemci bileşenleri arasında net ayrım yapılmıştır.
+
+- **Dosya Yapısının Revizyonu:**
+  - Gereksiz dosyalar kaldırılmış, dosya isimlendirme standartları (kebab-case, page/route uzantıları) uygulanmıştır.
+
+- **Kod Yazma Standartlarının Güncellenmesi:**
+  - ESLint, Prettier ve TypeScript kuralları revize edilerek projenin genel kod kalitesi artırılmıştır.
+
+- **CI/CD Süreçlerinin Entegrasyonu:**
+  - GitHub Actions ile test, lint, build ve deployment süreçleri otomatikleştirilmiştir.
+  - Vercel CLI kullanılarak production ve staging deployment süreçleri yönetilmektedir.
+
+- **Hata İzleme ve Performans Monitörlemesi:**
+  - Sentry ve New Relic entegrasyonları eklenerek, uygulama hataları ve performans ölçümleri gerçek zamanlı izlenmektedir.
+
+- **Supabase Entegrasyonu:**
+  - Supabase ile kimlik doğrulama, veritabanı işlemleri ve real-time data senkronizasyonu süreçleri optimize edilmiştir.
+
+## Migrasyonun Teknik Detayları
+
+- **Next.js App Router:**
+  - Yeni yapı sayesinde sunucu tarafı bileşenleri, route handler ve optimizasyonlar sağlanmıştır.
+  - Eski yapıdaki `pages` dizini tamamen kaldırılarak, tüm sayfa ve API route dosyaları yeni standartlara uyarlanmıştır.
+
+- **Dosya İsimlendirme:**
+  - Kod yazım kuralları kapsamında, tüm dosyalar kebab-case formatında ve açıklayıcı isimlerle oluşturulmuştur.
+
+- **CI/CD Pipeline:**
+  - GitHub Actions ile otomatik test, lint, build ve deploy adımları entegre edilmiştir.
+  - Vercel CLI ve vercel.json dosyası üzerinden deployment süreçleri yönetilmektedir.
+
+- **Hata İzleme & Telemetri:**
+  - Sentry ve New Relic SDK'ları entegre edilerek, hata raporlaması ve performans ölçümleri düzenli halde izlenmektedir.
+
+- **Kod Yazma Standartları:**
+  - Tüm geliştiriciler, proje dokümantasyonunda belirtilen kod yazma kurallarına (dosya isimlendirme, bileşen oluşturma, TypeScript kullanım, stil ve formatlama, genel prensipler) uymaktadır.
+
+## Sonuç ve Öğrenimler
+
+Bu migrasyon süreci; FinancialPro'un ölçeklenebilir, sürdürülebilir ve yüksek performanslı hale getirilmesi için kritik bir adımdır. Elde edilen tecrübeler, gelecekteki geliştirmelerin daha verimli ve standartlara uygun şekilde ilerlemesini sağlayacaktır.
+
+---
+
+Bu belge, projenin Clean Architecture migrasyon sürecindeki bütün adımları, karşılaşılan zorlukları ve elde edilen sonuçları kapsamaktadır. Gelecekte yapılacak modifikasyonlar ve iyileştirmeler bu dokümana referans olarak hizmet edecektir.
 
 ## Current State
 

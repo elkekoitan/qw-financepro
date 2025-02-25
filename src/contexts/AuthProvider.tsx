@@ -8,6 +8,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  signUp: (email: string, password: string, name: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,6 +35,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     checkAuth();
   }, []);
+
+  const signUp = async (email: string, password: string, name: string) => {
+    try {
+      // TODO: Gerçek kayıt işlemi yapılacak
+      const user = { id: Date.now().toString(), email, name };
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
+    } catch (error) {
+      console.error('Sign up error:', error);
+      throw error;
+    }
+  };
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -71,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, signInWithGoogle, signUp }}>
       {children}
     </AuthContext.Provider>
   );

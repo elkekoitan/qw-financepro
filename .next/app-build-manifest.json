@@ -2,35 +2,34 @@
   "pages": {
     "/_not-found/page": [
       "static/chunks/webpack-17abec1bd4bca978.js",
-      "static/chunks/52774a7f-3c74116549e80060.js",
-      "static/chunks/fd9d1056-a9e928776d3abfb1.js",
-      "static/chunks/14-1de39140471406bd.js",
-      "static/chunks/main-app-ed81f0ad2d0e7947.js",
-      "static/chunks/app/_not-found/page-d6f2be4a0793f92e.js"
+      "static/chunks/fd9d1056-701a57a01d1c3987.js",
+      "static/chunks/117-9cf5adcf8ab57a18.js",
+      "static/chunks/main-app-4e499c6104ecfa34.js",
+      "static/chunks/app/_not-found/page-ccfa893b222483f3.js"
     ],
     "/layout": [
       "static/chunks/webpack-17abec1bd4bca978.js",
-      "static/chunks/52774a7f-3c74116549e80060.js",
-      "static/chunks/fd9d1056-a9e928776d3abfb1.js",
-      "static/chunks/14-1de39140471406bd.js",
-      "static/chunks/main-app-ed81f0ad2d0e7947.js",
-      "static/chunks/app/layout-a5e7cf5f2befff35.js"
+      "static/chunks/fd9d1056-701a57a01d1c3987.js",
+      "static/chunks/117-9cf5adcf8ab57a18.js",
+      "static/chunks/main-app-4e499c6104ecfa34.js",
+      "static/chunks/app/layout-cbd3ebdc4ecc5247.js"
     ],
     "/global-error": [
       "static/chunks/webpack-17abec1bd4bca978.js",
-      "static/chunks/52774a7f-3c74116549e80060.js",
-      "static/chunks/fd9d1056-a9e928776d3abfb1.js",
-      "static/chunks/14-1de39140471406bd.js",
-      "static/chunks/main-app-ed81f0ad2d0e7947.js",
-      "static/chunks/app/global-error-759889a2ab4f9b5f.js"
+      "static/chunks/fd9d1056-701a57a01d1c3987.js",
+      "static/chunks/117-9cf5adcf8ab57a18.js",
+      "static/chunks/main-app-4e499c6104ecfa34.js",
+      "static/chunks/250-6b7dcf3e00db4002.js",
+      "static/chunks/app/global-error-c2a87bc9281ec0e2.js"
     ],
     "/sentry-example-page/page": [
       "static/chunks/webpack-17abec1bd4bca978.js",
-      "static/chunks/52774a7f-3c74116549e80060.js",
-      "static/chunks/fd9d1056-a9e928776d3abfb1.js",
-      "static/chunks/14-1de39140471406bd.js",
-      "static/chunks/main-app-ed81f0ad2d0e7947.js",
-      "static/chunks/app/sentry-example-page/page-2d15042b3f1ddbc4.js"
+      "static/chunks/fd9d1056-701a57a01d1c3987.js",
+      "static/chunks/117-9cf5adcf8ab57a18.js",
+      "static/chunks/main-app-4e499c6104ecfa34.js",
+      "static/chunks/250-6b7dcf3e00db4002.js",
+      "static/chunks/873-45fe3f8ea9262c32.js",
+      "static/chunks/app/sentry-example-page/page-2bc077433088ff1b.js"
     ]
   }
 }

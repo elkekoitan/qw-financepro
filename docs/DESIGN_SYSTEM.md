@@ -1,4 +1,63 @@
-# FinancePro Tasarım Sistemi
+# FinancialPro Design System
+
+_Son Güncelleme: 15 Mart 2024_
+
+## Overview
+
+Bu belge, FinancialPro projesinin tutarlı, ölçeklenebilir ve responsive tasarımını sağlamak amacıyla oluşturulan görsel ve etkileşimsel tasarım sistemini tanımlar. Projede, Tailwind CSS ve Material-UI prensipleri harmanlanarak modern ve minimalist bir görünüm elde edilmiştir. "Dark Theme" varsayılan olarak kullanılır, ancak tema toggle ile değiştirilebilir.
+
+## Design Tokens
+
+### Renkler
+
+- **Primary:** `var(--color-primary)` - Projenin ana marka rengi.
+- **Primary Dark:** `var(--color-primary-dark)` - Hover ve vurgulamalarda kullanılır.
+- **Secondary:** `var(--color-secondary)` - İkincil renk olarak kullanılır.
+- **Background:** `var(--color-dark)` veya `var(--color-dark-surface)` - Arka planlar için.
+- **Text:** `var(--color-text)` - Tipografi için temel metin rengi.
+
+Renkler, `src/theme/colors.js` dosyasında tanımlanmış olup Tailwind CSS'in theme extension kısmında referans alınmaktadır.
+
+### Tipografi
+
+- Başlıklar için: "Playfair Display", serif
+- Gövde metinleri için: "Plus Jakarta Sans", sans-serif
+- Font boyutları, ağırlıkları ve aralıklar, tutarlılık sağlamak adına proje genelinde belirlenen design tokenlara göre uygulanmaktadır.
+
+## Component Guidelines
+
+### Butonlar
+
+- Ana butonlar `bg-primary` kullanırken, hover durumunda `bg-primary-dark` uygulanır.
+- Butonlarda, tutarlı padding, kenar yuvarlama ve etkileşim efektleri sağlanmalıdır.
+
+### Kartlar ve Layoutlar
+
+- Kart bileşenlerinde "glass-card" efekti ve hover geçişleri kullanılır.
+- Dashboard sayfalarında ve bileşenlerinde responsive grid layoutlar Tailwind CSS sınıflarıyla uygulanır.
+
+## Tema Yönetimi
+
+- Projede, "ThemeToggle" bileşeni ile tema değiştirme desteği mevcuttur.
+- Tema ayarları, `src/contexts/ThemeContext.tsx` üzerinden yönetilir.
+- Tailwind CSS yapılandırması, tema renklerinin design tokenları ile uyumlu olacak şekilde genişletilmiştir.
+
+## Material-UI Entegrasyonu
+
+- MUI bileşenleri, ek stil ve bileşen seçenekleri sunmak amacıyla kullanılır.
+- MUI teması, Tailwind CSS design tokenlarıyla uyumlu hale getirilmiştir.
+
+## Kullanım Kılavuzu
+
+- Yeni bileşenler veya stil uygulamaları oluşturulurken, mevcut design tokenlara referans verilmelidir.
+- Responsive tasarım ilkeleri, Tailwind CSS breakpoint'leri kullanılarak uygulanmalıdır.
+- Erişilebilirlik için semantic HTML ve ARIA özellikleri göz önünde bulundurulmalıdır.
+
+## Gelecek Geliştirme Planları
+
+- Yeni UI bileşenleri geliştikçe design tokenlar güncellenecek ve belgeye eklenecektir.
+- Tutarlı komponent kütüphaneleri oluşturulacak ve bu kılavuzla entegre edilecektir.
+- Kullanıcı geribildirimleri doğrultusunda tasarım iyileştirmeleri düzenli olarak yapılacaktır.
 
 ## 1. Renk Paleti
 
@@ -319,6 +378,4 @@ const theme = {
     }
   }
 };
-```
-
-_Son Güncelleme: 15 Mart 2024_ 
+``` 

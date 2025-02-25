@@ -1,3 +1,51 @@
+# Transition Rehberi
+_Son Güncelleme: 15 Mart 2024_
+
+## Giriş
+
+Bu belge, FinancialPro projesinin eski yapısından, Clean Architecture prensiplerine uygun yeni yapıma geçiş sürecini detaylandırmaktadır. Geçiş süreci, mevcut kod tabanının incelenmesi, risklerin değerlendirilmesi, fazlı geçiş stratejileri, ekip eğitimleri ve dokümantasyon güncellemelerini kapsamaktadır.
+
+## Geçiş Süreci Aşamaları
+
+1. **Kapsamlı Kod İncelemesi:**
+   - Mevcut kod tabanının detaylı incelenmesi yapıldı.
+   - Katmanlar arası tutarsızlıklar, dosya konumlandırma hataları ve tekrarlanan kodlar belirlendi.
+
+2. **Risk Değerlendirmesi ve Önlemler:**
+   - Veri kaybı, hizmet kesintisi ve performans sorunlarına yönelik risk analizi yapıldı.
+   - Her aşama için geri dönüş planları, yedekleme stratejileri ve kapsamlı test senaryoları oluşturuldu.
+
+3. **Fazlı Geçiş Yaklaşımı:**
+   - Migrasyon, Domain, Application, Infrastructure ve Presentation katmanları şeklinde küçük parçalara bölündü.
+   - Her faz sonunda detaylı testler yapılarak bir sonraki aşamaya geçildi.
+
+4. **Ekip İletişimi ve Eğitim:**
+   - Tüm ekip üyelerine Clean Architecture prensipleri hakkında eğitimler verildi.
+   - Düzenli toplantılar ve demo seansları ile güncellemeler ve karşılaşılan zorluklar paylaşıldı.
+
+5. **Dokümantasyon Güncellemeleri:**
+   - Migrasyon sürecindeki adımlar, alınan dersler ve uygulanan stratejiler ayrıntılı olarak dokümante edildi.
+   - Gelecekte referans olması için sürekli güncelleme sağlandı.
+
+6. **Son Testler ve Onay:**
+   - Tüm fonksiyonlar için unit, integration ve E2E testleri gerçekleştirildi.
+   - Performans, hata izleme ve güvenlik iyileştirmeleri uygulandı.
+
+## Öğrenimler ve Gelecek Adımlar
+
+- **Öğrenimler:**
+  - Modüler ve test edilebilir kod yapısının, geliştirme sürecini hızlandırdığı gözlemlendi.
+  - Erken risk tespiti ve kontrollü geçişin değerine ilişkin önemli geri bildirimler alındı.
+
+- **Gelecek Adımlar:**
+  - Geçiş süreciyle ilgili süreçlerin periyodik olarak gözden geçirilmesi ve iyileştirilmesi.
+  - Ekip içi sürekli eğitim oturumlarının düzenlenmesi.
+  - Entegre edilen CI/CD, hata izleme ve performans ölçüm sistemlerinin düzenli kontrol edilmesi.
+
+## Sonuç
+
+Clean Architecture geçiş süreci, FinancialPro projesini daha sürdürülebilir, ölçeklenebilir ve yönetilebilir hale getirmiştir. Bu rehber, sürecin tüm detaylarını kapsamaktadır ve gelecekte yapılacak iyileştirmeler için temel referans kaynağı olacaktır.
+
 # Geçiş Planı
 
 ## Tamamlanan Aşamalar
@@ -240,8 +288,6 @@
    - Sonuç: Daha az hata ve daha kolay refactoring
 
 Bu zorlukların üstesinden gelmek, Next.js 14 geçişinin başarılı olmasını ve projenin daha sağlam bir temele oturmasını sağladı. Ayrıca, bu süreçte ekip olarak önemli dersler çıkardık ve best practice'leri benimsedik.
-
-_Son Güncelleme: 15 Mart 2024_
 
 ## Geçiş Metrikleri
 
