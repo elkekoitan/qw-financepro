@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "NODE_OPTIONS='--max_old_space_size=4096' npm run build",
+  "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
@@ -8,13 +8,15 @@
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "${NEXT_PUBLIC_SUPABASE_URL}",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${NEXT_PUBLIC_SUPABASE_ANON_KEY}",
-    "NEXT_PUBLIC_APP_URL": "${NEXT_PUBLIC_APP_URL}"
+    "NEXT_PUBLIC_APP_URL": "${NEXT_PUBLIC_APP_URL}",
+    "NEXT_PUBLIC_SENTRY_ENABLED": "false"
   },
   "build": {
     "env": {
       "NEXT_PUBLIC_SUPABASE_URL": "${NEXT_PUBLIC_SUPABASE_URL}",
       "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${NEXT_PUBLIC_SUPABASE_ANON_KEY}",
-      "NEXT_PUBLIC_APP_URL": "${NEXT_PUBLIC_APP_URL}"
+      "NEXT_PUBLIC_APP_URL": "${NEXT_PUBLIC_APP_URL}",
+      "NEXT_PUBLIC_SENTRY_ENABLED": "false"
     }
   },
   "headers": [
