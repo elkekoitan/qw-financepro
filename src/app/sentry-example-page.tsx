@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthProvider';
-import { MonitoringTest } from '@/components/monitoring/MonitoringTest';
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -39,7 +38,10 @@ export default function Home() {
           </div>
 
           <div className="bg-dark-surface rounded-lg shadow-lg p-6">
-            <MonitoringTest />
+            <h2 className="text-xl font-semibold">İzleme Sistemi Testi</h2>
+            <p className="mt-2 text-gray-400">
+              İzleme sistemi geçici olarak devre dışı bırakılmıştır.
+            </p>
           </div>
         </div>
       </div>
