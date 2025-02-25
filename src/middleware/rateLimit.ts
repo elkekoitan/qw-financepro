@@ -11,30 +11,31 @@ let redis: Redis;
 let requestCounts: Map<string, number> = new Map();
 let lastResetTime: number = Date.now();
 
-if (process.env.NODE_ENV === 'test') {
-  redis = {
-    pipeline: jest.fn().mockReturnThis(),
-    zremrangebyscore: jest.fn().mockImplementation(() => {
-      if (jest.getTimerCount() > 0) {
-        requestCounts.clear();
-        lastResetTime = Date.now();
-      }
-      return redis;
-    }),
-    zadd: jest.fn().mockImplementation(() => {
-      return redis;
-    }),
-    zcard: jest.fn().mockImplementation(() => {
-      return redis;
-    }),
-    exec: jest.fn().mockImplementation(() => {
+// Test ve geliştirme ortamı için mock Redis
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  const mockRedis = {
+    pipeline: () => mockRedis,
+    zremrangebyscore: () => {
+      requestCounts.clear();
+      lastResetTime = Date.now();
+      return mockRedis;
+    },
+    zadd: () => {
+      return mockRedis;
+    },
+    zcard: () => {
+      return mockRedis;
+    },
+    exec: () => {
       return Promise.resolve([
         [null, 1],
         [null, 1],
         [null, requestCounts.size]
       ]);
-    })
-  } as unknown as Redis;
+    }
+  };
+  
+  redis = mockRedis as unknown as Redis;
 } else {
   redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 }
@@ -45,7 +46,7 @@ async function checkRateLimit(
   limit: number,
   windowMs: number
 ): Promise<RateLimitState> {
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
     const count = requestCounts.get(key) || 0;
     requestCounts.set(key, count + 1);
 
@@ -85,8 +86,8 @@ function createResponse(data: any, status: number, headers: Record<string, strin
     }
   });
 
-  // Test ortamı için JSON dönüşümü ekle
-  if (process.env.NODE_ENV === 'test') {
+  // Test ve geliştirme ortamı için JSON dönüşümü ekle
+  if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
     (response as any).json = async () => data;
   }
 
@@ -136,8 +137,8 @@ export async function rateLimitMiddleware(
         headers: new Headers(headers)
       });
 
-      // Test ortamı için JSON dönüşümü ekle
-      if (process.env.NODE_ENV === 'test') {
+      // Test ve geliştirme ortamı için JSON dönüşümü ekle
+      if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
         (nextResponse as any).json = async () => response;
       }
 
@@ -152,8 +153,8 @@ export async function rateLimitMiddleware(
       headers: new Headers(headers)
     });
 
-    // Test ortamı için JSON dönüşümü ekle
-    if (process.env.NODE_ENV === 'test') {
+    // Test ve geliştirme ortamı için JSON dönüşümü ekle
+    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
       (nextResponse as any).json = async () => response;
     }
 
