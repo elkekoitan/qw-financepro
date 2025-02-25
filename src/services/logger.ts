@@ -1,14 +1,14 @@
 import pino from 'pino';
 
-const isTest = process.env.NODE_ENV === 'test';
+const isTest = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development';
 
-// Test ortamı için mock logger
+// Test ve geliştirme ortamı için mock logger
 const mockLogger = {
-  info: jest.fn(),
-  warn: jest.fn(),
-  error: jest.fn(),
-  debug: jest.fn(),
-  fatal: jest.fn()
+  info: (...args: any[]) => console.log('[INFO]', ...args),
+  warn: (...args: any[]) => console.warn('[WARN]', ...args),
+  error: (...args: any[]) => console.error('[ERROR]', ...args),
+  debug: (...args: any[]) => console.debug('[DEBUG]', ...args),
+  fatal: (...args: any[]) => console.error('[FATAL]', ...args)
 };
 
 // Base logger instance
