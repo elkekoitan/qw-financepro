@@ -5,13 +5,13 @@
   "type": "commonjs",
   "scripts": {
     "dev": "next dev",
-    "build": "NEXT_PUBLIC_SENTRY_ENABLED=false next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "npx jest",
     "test:watch": "jest --watch",
     "dev:clean": "rm -rf .next node_modules && npm install && npm run dev",
-    "build:production": "NODE_ENV=production NEXT_PUBLIC_SENTRY_ENABLED=false next build",
+    "build:production": "next build",
     "deploy:production": "vercel --prod",
     "deploy:staging": "vercel",
     "analyze": "ANALYZE=true next build"
